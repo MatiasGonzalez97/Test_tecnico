@@ -23,13 +23,15 @@ const personService = {
                 dni: dni
             });
 
-            await db.Address.create({
+            const address = await db.Address.create({
                 street: street,
                 street_number,
                 city,
                 userId: result.dni
             });
             
+            console.log(address);
+
             if(result) {
                 response = {"status":201, "res": result}
             } else {

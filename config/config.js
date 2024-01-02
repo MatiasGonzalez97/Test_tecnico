@@ -1,9 +1,9 @@
 module.exports =  {
   "development": {
-    "username": "root",
-    "password": "root",
-    "database": "api_crud",
-    "host": "127.0.0.1",
+    "username": "sql10674111",
+    "password": "XiMrCct3K7",
+    "database": "sql10674111",
+    "host": "sql10.freemysqlhosting.net",
     "dialect": "mysql",
     "logging": false,
   },
