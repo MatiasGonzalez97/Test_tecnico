@@ -37,6 +37,7 @@ const personService = {
             }
             return response;
         }catch(err){
+            console.log('aca')
             console.log(err);
             response = {"status":500,"res":err};
             return response;

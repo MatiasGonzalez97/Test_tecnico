@@ -4,7 +4,9 @@
    "description": "",
    "main": "index.js",
    "scripts": {
-      "dev": "nodemon index.js"
+      "dev": "nodemon index.js",
+      "test": "jest --verbose",
+      "test:watch": "npm run test -- --watch"
    },
    "author": "Matias",
    "license": "ISC",
@@ -19,6 +21,7 @@
       "nodemon": "^2.0.15",
       "reflect-metadata": "^0.1.13",
       "sequelize": "^6.16.2",
-      "sequelize-cli": "^6.4.1"
+      "sequelize-cli": "^6.4.1",
+      "supertest": "^6.3.3"
    }
 }
