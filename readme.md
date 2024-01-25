@@ -12,7 +12,7 @@ El proyecto viene con variables de entorno para levantar la base de datos, modif
 
 1° Correr ```npm i``` para instalar dependencias 
 
-2° Levantar una BD Mysql con el script db.sql
+2° Levantar una BD Mysql con el script db.sql (La BD utilizada para el proyecto es MySQL)
 
 3° Correr migraciones con ```npx sequelize-cli db:migrate```
 
