@@ -2,7 +2,7 @@ const validador = require('../helper/helper');
 const path = require('path')
 const csvWriter = require('csv-writer');
 const db = require('../models/index.js');
-
+const { BadRequestError, InternalError } = require('../helper/errorHandler.js')
 const personService = {
     create : async (body, file) => {
         try{
@@ -11,7 +11,7 @@ const personService = {
             const duplicatedUser = await validador.validate_existent_user(dni);
 
             if(duplicatedUser){
-                return {"status": 400, "res": "User already exists"}
+                throw new BadRequestError("User already exists", 404);
             }   
 
             let response;
@@ -30,19 +30,14 @@ const personService = {
                 userId: result.dni
             });
             
-            console.log(address);
 
-            if(result) {
-                response = {"status":201, "res": result}
-            } else {
-                response = {"status": 422, "res" : "Not found"}
+            if(!result) {
+                throw new InternalError();
             }
+            response = {"status":201, "res": result}
             return response;
         }catch(err){
-            console.log('aca')
-            console.log(err);
-            response = {"status":500,"res":err};
-            return response;
+            return { res: err.message, status: err.status };
         }
     },
     getAll : async () => {
@@ -53,19 +48,16 @@ const personService = {
                     as: 'address'
                 }]
             });
-            if(result.length > 0) {
-                response = {"status":200, "res": result}
-            } else {
-                response = {"status": 422, "res" : "Not found"}
+            if(result.length <= 0) {
+                throw new BadRequestError("Users not found", 404);
             }
+            response = {"status":200, "res": result}
             return response;
         }catch(err){
-            response = {"status":500,"res":err};
-            return response; 
+            return { res: err.message, status: err.status };
         }
     },
     find : async (params) => {
-        console.log(params);
         const {name, age, dni} = params;
         const where = {}
         if(name)
@@ -83,15 +75,14 @@ const personService = {
                     as: 'address'
                 }]
             });
-            if(result) {
-                response = {"status":200, "res": result}
-            } else {
-                response = {"status": 422, "res" : "Not found"}
+            console.log(result);
+            if(result.length <= 0) {
+                throw new BadRequestError("User not found", 404);
             }
+            response = {"status":200, "res": result}
             return response;
         }catch(err) {
-            response = {"status":500,"res":err};
-            return response;  
+            return { res: err.message, status: err.status };
         }
     },
     findOne : async (params) => {
@@ -106,16 +97,13 @@ const personService = {
                     as: 'address'
                 }]
             });
-            if(result) {
-                response = {"status":200, "res": result}
-            } else {
-                response = {"status": 422, "res" : "Not found"}
+            if(!result) {
+                throw new BadRequestError("User not found", 404);
             }
+            response = {"status":200, "res": result}
             return response;
         }catch(err) {
-            console.log(err);
-            response = {"status":500,"res":err};
-            return response;  
+            return { res: err.message, status: err.status };
         }
     },
     delete : async (params) => {
@@ -126,15 +114,13 @@ const personService = {
                     dni: dni
                 }
             });
-            if(result) {
-                response = {"status":204, "res": null}
-            } else {
-                response = {"status": 422, "res" : "Not found"}
-            }
+            if(!result) {
+                throw new BadRequestError("User not found", 404);
+            }   
+            response = {"status":204, "res": null}
             return response;
         }catch(err) {
-            response = {"status":500,"res":err};
-            return response;  
+            return { res: err.message, status: err.status };
         }
     },
     edit: async (params, body) => {
@@ -147,22 +133,24 @@ const personService = {
                 }
             });
             if(!person){
-                return {"status": 404, "res": "User not found"}
+                throw new BadRequestError("User not found", 404);
             }
+
             if(last_name)
                 person.lastName = last_name;
             if(name)
                 person.firstName = name;
             if(age)
                 person.age = age;
+
             const updated = await person.save();
+
             if(updated) {
                 response = {"status":200, "res": updated}
             }
             return response;
         }catch(err){
-            response = {"status":500,"res":err};
-            return response;  
+            return { res: err.message, status: err.status };
         }
        
     },
@@ -191,15 +179,13 @@ const personService = {
             const file = `./exports/exported.csv`;
             res.download(file);
         }catch(err){
-            response = {"status":500,"res":err};
-            return response;  
+            return { res: err.message, status: err.status };
         }
     },
     addAddressToUser: async(params, body) => {
         try{
             const {street, city, street_number} = body;
             const { dni } = params;
-            console.log(street, city, street_number, dni);
             const result = await db.Address.create({
                 street: street,
                 street_number,
@@ -207,16 +193,14 @@ const personService = {
                 userId: dni
             });
             
-            if(result) {
-                response = {"status":201, "res": result}
-            } else {
-                response = {"status": 422, "res" : "Error trying to save in DB"}
+            if(!result) {
+                throw new InternalError();
             }
+            response = {"status":201, "res": result}
             return response;
 
         }catch(error) {
-            response = {"status":500,"res":err};
-            return response;  
+            return { res: err.message, status: err.status };
         }
     }
 }

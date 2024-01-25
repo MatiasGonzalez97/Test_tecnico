@@ -11,7 +11,8 @@
 			"name": "healtCheck",
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"description": "# Health Check Endpoint\n\nThis endpoint sends an HTTP GET request to `localhost:4000/health` in order to perform a health check.\n\n## Response\n\nReturn status 200 and OK"
 			},
 			"response": []
 		},
@@ -67,7 +68,8 @@
 						"api",
 						"person"
 					]
-				}
+				},
+				"description": "### Add Person Information\n\nThis API endpoint allows you to add person information to the database.\n\n#### Request Body\n\n- `name` (text): The first name of the person.\n- `last_name` (text): The last name of the person.\n- `age` (text): The age of the person.\n- `dni` (text): The DNI of the person.\n- `picture` (file): A picture of the person.\n    \n\n#### Response Error\n\n- Status: 404\n- Content-Type: application/json\n- `res`: The response data.\n    \n\n#### Response Ok\n\n```\n{\n    \"res\": {\n        \"lastName\": \"gonzalez\",\n        \"firstName\": \"matias\",\n        \"age\": \"30\",\n        \"picture\": \"1706192338196.jpg\",\n        \"dni\": \"123442\",\n        \"updatedAt\": \"2024-01-25T14:18:58.205Z\",\n        \"createdAt\": \"2024-01-25T14:18:58.205Z\"\n    }\n}\n\n ```"
 			},
 			"response": []
 		},
@@ -86,7 +88,8 @@
 						"api",
 						"person"
 					]
-				}
+				},
+				"description": "Response all users stored in database\n\nRequest :\n\nlocalhost:4000/api/person\n\nResponse example:\n\n```\n{\n    \"res\": [\n        {\n            \"dni\": 1234,\n            \"firstName\": \"matias\",\n            \"lastName\": \"gonzalez\",\n            \"age\": 30,\n            \"picture\": \"1706191413376.jpg\",\n            \"createdAt\": \"2024-01-25T14:03:33.000Z\",\n            \"updatedAt\": \"2024-01-25T14:03:33.000Z\",\n            \"deletedAt\": null,\n            \"address\": [\n                {\n                    \"id\": 6,\n                    \"street\": null,\n                    \"street_number\": null,\n                    \"city\": null,\n                    \"userId\": 1234,\n                    \"createdAt\": \"2024-01-25T14:03:33.000Z\",\n                    \"updatedAt\": \"2024-01-25T14:03:33.000Z\",\n                    \"deletedAt\": null\n                }\n            ]\n        },\n        {\n            \"dni\": 12344,\n            \"firstName\": \"matias\",\n            \"lastName\": \"gonzalez\",\n            \"age\": 30,\n            \"picture\": \"1706191449789.jpg\",\n            \"createdAt\": \"2024-01-25T14:04:09.000Z\",\n            \"updatedAt\": \"2024-01-25T14:04:09.000Z\",\n            \"deletedAt\": null,\n            \"address\": [\n                {\n                    \"id\": 7,\n                    \"street\": null,\n                    \"street_number\": null,\n                    \"city\": null,\n                    \"userId\": 12344,\n                    \"createdAt\": \"2024-01-25T14:04:09.000Z\",\n                    \"updatedAt\": \"2024-01-25T14:04:09.000Z\",\n                    \"deletedAt\": null\n                }\n            ]\n        },\n        ...\n    ]\n}\n ```"
 			},
 			"response": []
 		},
@@ -118,7 +121,8 @@
 							"disabled": true
 						}
 					]
-				}
+				},
+				"description": "Request:\n\nQuery Params: URL/{DNI}\n\nResponse example\n\n```\n{\n    \"res\": {\n        \"dni\": 1234,\n        \"firstName\": \"matias\",\n        \"lastName\": \"gonzalez\",\n        \"age\": 30,\n        \"picture\": \"1706191413376.jpg\",\n        \"createdAt\": \"2024-01-25T14:03:33.000Z\",\n        \"updatedAt\": \"2024-01-25T14:03:33.000Z\",\n        \"deletedAt\": null,\n        \"address\": [\n            {\n                \"id\": 6,\n                \"street\": null,\n                \"street_number\": null,\n                \"city\": null,\n                \"userId\": 1234,\n                \"createdAt\": \"2024-01-25T14:03:33.000Z\",\n                \"updatedAt\": \"2024-01-25T14:03:33.000Z\",\n                \"deletedAt\": null\n            }\n        ]\n    }\n}\n ```"
 			},
 			"response": []
 		},
@@ -145,7 +149,8 @@
 							"disabled": true
 						}
 					]
-				}
+				},
+				"description": "This endpoint sends an HTTP DELETE request to localhost:4000/api/person/1234 to delete a specific person record. The request does not include a request body, and upon successful deletion, the server responds with a status code of 204 and a Content-Type of text/xml. The response body is null."
 			},
 			"response": []
 		},
@@ -181,7 +186,8 @@
 							"disabled": true
 						}
 					]
-				}
+				},
+				"description": "This endpoint allows updating a specific person's information using their ID.\n\n### Request\n\n**Endpoint**\n\n``` json\nPUT localhost:4000/api/person/12344\n\n ```\n\n**Request Body**\n\n- last_name (string, required): The updated last name of the person.\n    \n\nOr the attribute you want to change\n\n### Response\n\n- Status: 200\n- Content-Type: application/json\n    \n\n``` json\n{\n    \"res\": {\n        \"dni\": 12344,\n        \"firstName\": \"matias\",\n        \"lastName\": \"dasdsadsa\",\n        \"age\": 30,\n        \"picture\": \"1706191449789.jpg\",\n        \"createdAt\": \"2024-01-25T14:04:09.000Z\",\n        \"updatedAt\": \"2024-01-25T14:04:56.959Z\",\n        \"deletedAt\": null\n    }\n}\n\n ```"
 			},
 			"response": []
 		},
@@ -235,7 +241,8 @@
 							"value": "sad"
 						}
 					]
-				}
+				},
+				"description": "- **The request should include the DNI as a query parameter.**\n    \n\nResponse:\n\n- DNI,\n    \n- first name,\n    \n- last name,\n    \n- age,\n    \n- picture,\n    \n- creation and update timestamps,\n    \n- array of addresses associated with the person."
 			},
 			"response": []
 		},
@@ -265,7 +272,8 @@
 						"address",
 						"22"
 					]
-				}
+				},
+				"description": "### Add Address for Person\n\nThis endpoint allows the addition of address details for a specific person.\n\n#### Request Body\n\n- **url/{userId}** (DNI)\n    \n- `street` (string, required): The street name for the address.\n    \n- `street_number` (number, required): The street number for the address.\n    \n- `city` (string, required): The city for the address.\n    \n\n#### Response\n\n- Status: 201 Created\n- Content-Type: application/json\n    \n\nUpon a successful request, the response will contain the newly created address details including the `id`, `street`, `street_number`, `city`, `userId`, `updatedAt`, and `createdAt`."
 			},
 			"response": []
 		}
